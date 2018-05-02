@@ -49,7 +49,7 @@ class FittedImage extends Component {
       'FittedImage--' + this.props.fit,
        this.props.className
     );
-  },
+  }
 
   _getImage() {
     /* eslint-disable no-unused-vars */
@@ -60,24 +60,24 @@ class FittedImage extends Component {
     } else {
       return <div {...props} style={ this._getStyle() } className={ this._getClassName(true) }></div>;
     }
-  },
+  }
 
   _getStyle() {
     let style = this.props.style || {};
     style.backgroundImage = 'url(' + this.props.src + ')';
     return style;
-  },
+  }
 
   _isLoaded() {
     return states.LOADED === this.state.status;
-  },
+  }
 
   _loadImage() {
     this.setState({
       status: states.LOADING
     });
     loadImage( this.props.src ).then( this._onLoadSuccess, this._onLoadError );
-  },
+  }
 
   _onLoadSuccess() {
     this.setState({
@@ -85,7 +85,7 @@ class FittedImage extends Component {
     });
 
     this.props.onLoad();
-  },
+  }
 
   _onLoadError() {
     this.setState({
