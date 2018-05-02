@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import loadImage from './utils/loadImage.js';
@@ -12,52 +12,25 @@ const states = {
   DEAD:     3
 };
 
-const FittedImage = React.createClass({
-
-  /*  Properties  */
-
-  displayName: 'FittedImage',
-
-  propTypes: {
-    background: PropTypes.bool,
-    className: PropTypes.string,
-    fit: PropTypes.oneOf(['auto', 'contain', 'cover']),
-    loader: PropTypes.element,
-    src: PropTypes.string.isRequired,
-    style: PropTypes.object,
-    onLoad: PropTypes.func,
-    onError: PropTypes.func
-  },
-
-  /* Lifecycle */
-
-  getDefaultProps() {
-    return {
-      background: false,
-      fit: 'auto',
-      style: {},
-      onLoad: () => {},
-      onError: () => {}
-    };
-  },
-
-  getInitialState() {
-    return {
+class FittedImage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       status: states.PENDING
     };
-  },
+  }
 
   componentDidMount() {
     if (this.props.loader) {
       this._loadImage();
     }
-  },
+  }
 
   componentWillReceiveProps(props) {
     if (this.props.src !== props.src) {
       this._loadImage();
     }
-  },
+  }
 
   render() {
     if ( !this.props.loader || this._isLoaded() ) {
@@ -65,7 +38,7 @@ const FittedImage = React.createClass({
     } else {
       return this.props.loader;
     }
-  },
+  }
 
   /* Custom */
 
@@ -121,7 +94,25 @@ const FittedImage = React.createClass({
 
     this.props.onError();
   }
+}
 
-});
+FittedImage.propTypes = {
+  background: PropTypes.bool,
+  className: PropTypes.string,
+  fit: PropTypes.oneOf(['auto', 'contain', 'cover']),
+  loader: PropTypes.element,
+  src: PropTypes.string.isRequired,
+  style: PropTypes.object,
+  onLoad: PropTypes.func,
+  onError: PropTypes.func
+};
+
+FittedImage.defaultProps = {
+  background: false,
+  fit: 'auto',
+  style: {},
+  onLoad: () => {},
+  onError: () => {}
+};
 
 export default FittedImage;
